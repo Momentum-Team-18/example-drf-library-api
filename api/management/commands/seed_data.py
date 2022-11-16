@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 if created:
                     book.reading_state = random.choice(["wr", "rg", "rd"])
 
-            self.stdout.write(self.style.SUCCESS(f"Objects added to database."))
+            self.stdout.write(self.style.SUCCESS("Objects added to database."))
 
         else:
             raise CommandError("This command only runs when DEBUG is set to True.")
