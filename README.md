@@ -25,7 +25,7 @@ POST requests with a body should set the `Content-Type` header to `application/j
 Username and password are required.
 
 ```
-POST api/auth/users
+POST auth/users
 
 {
   "username": "baby_yoda",
