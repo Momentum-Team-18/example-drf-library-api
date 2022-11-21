@@ -135,6 +135,9 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR/ "media"
+
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -158,3 +161,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 if env("RENDER"):
     ALLOWED_HOSTS.append(env("RENDER_EXTERNAL_HOSTNAME"))
+
+DJOSER = {
+    'SERIALIZERS': {
+        'current_user': 'api.serializers.UserSerializer'
+      },
+}

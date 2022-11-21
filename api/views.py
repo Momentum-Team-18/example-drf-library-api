@@ -3,20 +3,23 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.views import APIView
+from rest_framework import parsers
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveDestroyAPIView,
+    UpdateAPIView,
     get_object_or_404,
 )
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Book, BookRecord, BookReview
+from .models import Book, BookRecord, BookReview, User
 from .serializers import (
     BookSerializer,
     BookDetailSerializer,
     BookRecordSerializer,
     BookReviewSerializer,
+    UserSerializer,
 )
 from .custom_permissions import (
     IsAdminOrReadOnly,
@@ -108,3 +111,13 @@ class CreateFavoriteView(APIView):
         serializer = BookDetailSerializer(book, context={"request": request})
         # return a response
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class UserAvatarView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    parser_classes = [parsers.FileUploadParser]
+
+    def get_object(self):
+      return self.request.user
+
+
