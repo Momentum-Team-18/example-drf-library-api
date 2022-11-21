@@ -20,10 +20,9 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     RENDER=(bool, False),
-    ENV_PATH=(str, BASE_DIR/'library/.env'),
 )
 
-env.read_env(env.str('ENV_PATH'))
+env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
