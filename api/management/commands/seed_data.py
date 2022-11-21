@@ -7,6 +7,8 @@ from api.models import Book, User, BookRecord
 from library import settings
 
 
+# To run this management command:
+# python manage.py seed_data
 class Command(BaseCommand):
     help = "Create some data for development"
 
