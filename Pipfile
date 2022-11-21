@@ -13,6 +13,8 @@ drf-nested-routers = "*"
 gunicorn = "*"
 djoser = "*"
 django-cors-headers = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
 
 [dev-packages]
 black = "*"
