@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class User(AbstractUser):
-    pass
+    avatar = models.ImageField(upload_to="user_avatars", blank=True, null=True)
 
 
 class Book(models.Model):
