@@ -19,7 +19,7 @@ class Command(BaseCommand):
             )
           if created:
             user.email = ''
-            user.password = 'badpassword'
+            user.set_password('badpassword')
             user.is_superuser = True
             user.save()
             msg = self.style.SUCCESS(f"User 'admin' added to database.")
