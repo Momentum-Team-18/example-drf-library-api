@@ -1,9 +1,8 @@
 import random
 
-from django.contrib.auth.hashers import make_password
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from api.models import Book, User, BookRecord
+from api.models import User
 from library import settings
 
 
@@ -15,15 +14,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not settings.DEBUG:
           user, created = User.objects.get_or_create(
-                username="admin"
+                username=settings.DJANGO_SUPERUSER_USERNAME
             )
           if created:
             user.email = ''
-            user.set_password('badpassword')
+            user.set_password(settings.DJANGO_SUPERUSER_PASSWORD)
             user.is_superuser = True
             user.save()
-            msg = self.style.SUCCESS(f"User 'admin' added to database.")
+            msg = self.style.SUCCESS(f"Superuser {settings.DJANGO_SUPERUSER_USERNAME} added to database.")
           else:
-            msg = self.style.WARNING(f"User 'admin' already exists.")
+            msg = self.style.WARNING(f"Superuser {settings.DJANGO_SUPERUSER_USERNAME} already exists.")
           self.stdout.write(msg)
 
