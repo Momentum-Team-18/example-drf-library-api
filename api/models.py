@@ -23,9 +23,7 @@ class Book(models.Model):
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-    favorited_by = models.ManyToManyField(
-        User, related_name="favorite_books", null=True, blank=True
-    )
+    favorited_by = models.ManyToManyField(User, related_name="favorite_books")
 
     class Meta:
         constraints = [
