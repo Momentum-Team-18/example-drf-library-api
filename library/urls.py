@@ -44,7 +44,7 @@ urlpatterns = [
         name="book_reviews",
     ),
     path(
-        "api/book-reviews/<int:pk>",
+        "api/reviews/<int:pk>",
         api_views.BookReviewDetailView.as_view(),
         name="book_review_detail",
     ),
