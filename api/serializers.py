@@ -9,18 +9,20 @@ class UserCreateSerializer(serializers.ModelSerializer):
         model = User
         fields = ("username", "email", "password")
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["pk", "username", "avatar"]
 
     def update(self, instance, validated_data):
-      if "file" in self.initial_data:
+        if "file" in self.initial_data:
             file = self.initial_data.get("file")
             instance.avatar.save(file.name, file, save=True)
             return instance
-      # this call to super is to make sure that update still works for other fields
-      return super().update(instance, validated_data)
+        # this call to super is to make sure that update still works for other fields
+        return super().update(instance, validated_data)
+
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,6 +76,3 @@ class BookReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReview
         fields = ("pk", "body", "book", "reviewed_by")
-
-
-

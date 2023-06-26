@@ -14,7 +14,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if settings.DEBUG:
-
             books = [
                 {
                     "title": "The Countess of Pembroke's Arcadia",

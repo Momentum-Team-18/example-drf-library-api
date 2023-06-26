@@ -23,7 +23,9 @@ class Book(models.Model):
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-    favorited_by = models.ManyToManyField(User, related_name="favorite_books")
+    favorited_by = models.ManyToManyField(
+        User, related_name="favorite_books", null=True, blank=True
+    )
 
     class Meta:
         constraints = [
@@ -76,7 +78,11 @@ class BookReview(models.Model):
         to="Book", on_delete=models.CASCADE, related_name="reviews"
     )
     reviewed_by = models.ForeignKey(
-        to="User", on_delete=models.SET_NULL, blank=True, null=True, related_name="book_reviews"
+        to="User",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="book_reviews",
     )
 
     class Meta:
@@ -88,6 +94,6 @@ class BookReview(models.Model):
         return f"Review of {self.book.title}"
 
     def __repr__(self):
-      return (
-          f"<BookReview pk={self.pk} book={self.book} reviewed_by={self.reviewed_by}>"
-      )
+        return (
+            f"<BookReview pk={self.pk} book={self.book} reviewed_by={self.reviewed_by}>"
+        )

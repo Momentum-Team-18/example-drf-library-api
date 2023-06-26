@@ -21,7 +21,7 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     RENDER=(bool, False),
-    USE_S3=(bool, False)
+    USE_S3=(bool, False),
 )
 
 env.read_env()
@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -138,7 +138,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR/ "media"
+MEDIA_ROOT = BASE_DIR / "media"
 
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -162,39 +162,37 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 # allow request headers
 CORS_ALLOW_HEADERS = list(default_headers) + [
-    'content-disposition',
+    "content-disposition",
 ]
 
 if env("RENDER"):
     ALLOWED_HOSTS.append(env("RENDER_EXTERNAL_HOSTNAME"))
-    DJANGO_SUPERUSER_USERNAME=env("DJANGO_SUPERUSER_USERNAME")
-    DJANGO_SUPERUSER_PASSWORD=env("DJANGO_SUPERUSER_PASSWORD")
+    DJANGO_SUPERUSER_USERNAME = env("DJANGO_SUPERUSER_USERNAME")
+    DJANGO_SUPERUSER_PASSWORD = env("DJANGO_SUPERUSER_PASSWORD")
 
 DJOSER = {
-    'SERIALIZERS': {
-        'current_user': 'api.serializers.UserSerializer'
-      },
+    "SERIALIZERS": {"current_user": "api.serializers.UserSerializer"},
 }
 
 # Env vars for S3
-if env('USE_S3'):
+if env("USE_S3"):
     # These are necessary for AWS / make sure these are set in production as well
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
     # https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
     # This line sets your default permissions to public read-only
-    AWS_DEFAULT_ACL = 'public-read'
+    AWS_DEFAULT_ACL = "public-read"
 
     # These are optional
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
     AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400',
+        "CacheControl": "max-age=86400",
     }
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
 
     # This is for django-storages with boto3
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
