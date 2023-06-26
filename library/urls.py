@@ -53,8 +53,11 @@ urlpatterns = [
         api_views.CreateFavoriteView.as_view(),
         name="favorite_books",
     ),
+    path("api/books/search/", api_views.BookSearchView.as_view()),
     path("admin/", admin.site.urls),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
-    path("auth/users/me/avatar", api_views.UserAvatarView.as_view(), name="user_avatar"),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.authtoken")),
+    path(
+        "auth/users/me/avatar", api_views.UserAvatarView.as_view(), name="user_avatar"
+    ),
 ]

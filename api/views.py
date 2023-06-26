@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import parsers
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -12,7 +13,6 @@ from rest_framework.generics import (
 )
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
 from .models import Book, BookRecord, BookReview, User
 from .serializers import (
     BookSerializer,
@@ -112,12 +112,37 @@ class CreateFavoriteView(APIView):
         # return a response
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 class UserAvatarView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     parser_classes = [parsers.FileUploadParser]
 
     def get_object(self):
-      return self.request.user
+        return self.request.user
 
 
+class BookSearchView(APIView):
+    def get(self, request, format=None):
+        # use query params to get the search term
+        # e.g /api/books/search/?title=star
+
+        title = request.query_params.get("title")
+        author = request.query_params.get("author")
+        publication_year = request.query_params.get("publication_year")
+
+        results = Book.objects.all()
+
+        if title:
+            results = results.filter(title__icontains=request.query_params.get("title"))
+        if author:
+            results = results.filter(
+                author__icontains=request.query_params.get("author")
+            )
+        if publication_year:
+            results = results.filter(
+                publication_year__icontains=request.query_params.get("publication_year")
+            )
+
+        serializer = BookSerializer(results, many=True)
+        return Response(serializer.data)
