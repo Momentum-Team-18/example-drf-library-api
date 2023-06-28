@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import parsers
+from rest_framework.parsers import FileUploadParser, JSONParser, MultiPartParser
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveDestroyAPIView,
@@ -32,6 +32,7 @@ class BookViewSet(ModelViewSet):
     queryset = Book.objects.all().order_by("title")
     serializer_class = BookDetailSerializer
     permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+    parser_classes = [JSONParser, MultiPartParser]
 
     def get_serializer_class(self):
         if self.action in ["list"]:
@@ -127,7 +128,7 @@ class CreateFavoriteView(APIView):
 class UserAvatarView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    parser_classes = [parsers.FileUploadParser]
+    parser_classes = [FileUploadParser]
 
     def get_object(self):
         return self.request.user

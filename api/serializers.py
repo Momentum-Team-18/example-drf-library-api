@@ -41,6 +41,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
     reviews = serializers.HyperlinkedRelatedField(
         many=True, read_only=True, view_name="book_review_detail"
     )
+    title_page = serializers.ImageField()
 
     class Meta:
         model = Book
@@ -52,6 +53,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
             "featured",
             "reviews",
             "favorite_count",
+            "title_page",
         )
         validators = [
             UniqueTogetherValidator(
